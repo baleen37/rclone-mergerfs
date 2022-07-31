@@ -48,8 +48,8 @@ else
     echo "MergerFS: OK: Target '$target' is empty or not a directory"
 fi
 
-echo "MergerFS: Creating drive (/mnt/merged) overlaying (/mnt/cache) and (/mnt/remote) - writes are directed at /mnt/cache"
-mergerfs.sh -o async_read=false,use_ino,allow_other,auto_cache,func.getattr=newest,category.action=all,category.create=ff /mnt/cache:/mnt/remote /mnt/merged
+echo "MergerFS: Creating drive (/mnt/merged) overlaying (/mnt/local) and (/mnt/remote) - writes are directed at /mnt/local"
+mergerfs -o async_read=false,use_ino,allow_other,auto_cache,func.getattr=newest,category.action=all,category.create=ff /mnt/local:/mnt/remote /mnt/merged
 wait ${!}
 
 #test write
