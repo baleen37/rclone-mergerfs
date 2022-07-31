@@ -17,16 +17,16 @@ RUN apt-get install mergerfs
 RUN apt-get clean -qq && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #
 ## add local files
-#COPY root/ /bar/
+COPY . /data
 #
 #ADD https://raw.githubusercontent.com/by275/docker-base/main/_/etc/cont-init.d/adduser /bar/etc/cont-init.d/10-adduser
 #ADD https://raw.githubusercontent.com/by275/docker-base/main/_/etc/cont-init.d/install-pkg /bar/etc/cont-init.d/20-install-pkg
 #ADD https://raw.githubusercontent.com/by275/docker-base/main/_/etc/cont-init.d/wait-for-mnt /bar/etc/cont-init.d/30-wait-for-mnt
 
-VOLUME /config /local /remote /merged
+VOLUME /config /mnt/local /mnt/remote /mnt/merged
 WORKDIR /data
 #
 #HEALTHCHECK --interval=30s --timeout=30s --start-period=10s --retries=3 \
 #    CMD /usr/local/bin/healthcheck
 #
-#ENTRYPOINT ["/init"]
+ENTRYPOINT ./services/mergerfs.sh
